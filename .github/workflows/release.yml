@@ -24,7 +24,7 @@ jobs:
         run: yarn install --no-lockfile
 
       - name: Build the project
-        run: yarn build  # Adjust this if your build command is different
+        run: yarn make  # Adjust this if your build command is different
 
       - name: Package the app (for Electron)
         if: success()
