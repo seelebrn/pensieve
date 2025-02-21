@@ -1,0 +1,57 @@
+name: Build & Release
+
+on:
+  push:
+    branches:
+      - main  # Run when code is pushed to the main branch
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build the project
+        run: yarn build  # Adjust this if your build command is different
+
+      - name: Package the app (for Electron)
+        if: success()
+        run: yarn make  # Adjust if using another packaging method
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: built-app
+          path: |
+            out/
+            dist/
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download built artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: built-app
+          path: built-app
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: built-app/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
