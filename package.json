@@ -17,11 +17,21 @@
     "start:docs": "markbase watch ./docs",
     "postinstall": "cpy ./README.md ./docs --rename=index.md && cpy ./images ./docs"
   },
-  "config": {
+    "config": {
     "forge": {
       "packagerConfig": {
         "executableName": "Pensieve"
-      }
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "platforms": ["win32"]
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": ["win32"]
+        }
+      ]
     }
   },
   "dependencies": {
