@@ -16,10 +16,9 @@ import { pullModel } from "./ollama";
 
 const promptTemplate = `Be short and concise. 
 
-The following is a meeting transcript. The user is aware that the context is a meeting transcript, and does not need to be reminded of that.
-"Me" refers to the user you are talking to, "They" refers to the other person in the conversation.
-The information in the square brackets describes the timestamp of when the text was spoken.
-Answer the following question based only on the provided text:
+Ci-joint la transcription d'une réunion. L'utilisateur sait que le contexte est une transcription de réunion et il n'y a pas besoin de le lui rappeler. "Moi" fait référence à l'utilisateur et "Ils" fait référence aux autres personnes présentes à la réunion.
+L'information entre crochets décrit les timestamps auxquels le texte a été prononcé. 
+Répond aux questions suivantes en te basant sur le contexte.:
 
 <context>
 {context}
@@ -28,12 +27,12 @@ Answer the following question based only on the provided text:
 Question: {input}`;
 
 const prompts = {
-  summary: "Generate a short summary of the meeting.",
+  summary: "Génèse un résumé court du contenu de la réunion.",
   actionItems:
     "Extract action items from the meeting. Each action item should be a task that the user needs to follow up on after the meeting. " +
     "Provide one action item per line, in the format '{Me/They}: {action item text} ({timestamp})'.",
   sentenceSummary:
-    "Summarize the meeting very briefly in a very short sentence of less than 10 words.",
+    "Résume le meeting très brièvement en une phrase de moins de 10 mots.",
 };
 
 const parseActionItems = (text: string) => {
