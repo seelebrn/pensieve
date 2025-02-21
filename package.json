@@ -17,6 +17,13 @@
     "start:docs": "markbase watch ./docs",
     "postinstall": "cpy ./README.md ./docs --rename=index.md && cpy ./images ./docs"
   },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "executableName": "Pensieve"
+      }
+    }
+  }
   "dependencies": {
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.69",
